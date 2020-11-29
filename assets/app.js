@@ -3,74 +3,77 @@ const reset = document.getElementById('reset_btn');
 let newGrid;
 let userInput;
 
-function getUserInput (){
-    userInput = prompt('Enter a number: ', );
+const submitBtn = document.getElementById('submitBtn');
+submitBtn.addEventListener('click', getUserInput);
 
+function getUserInput() {
+    userInput = Number(document.getElementById('userInput').value);
+    closeModal();
     createGrid(userInput);
 }
-getUserInput();
 
+const modal = document.getElementById('popUp__modal');
 
-function createGrid(userInput){
-   
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+window.addEventListener('click', clickOutside);
+
+function clickOutside(e) {
+
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+
+}
+
+function createGrid(userInput) {
 
     let rows = userInput;
     let cols = userInput;
-    mainContainer.style.setProperty('--grid-rows',rows);
+    mainContainer.style.setProperty('--grid-rows', rows);
     mainContainer.style.setProperty('--grid-cols', cols);
 
-    for(let i = 0; i <(rows * cols); i++){
+    for (let i = 0; i < (rows * cols); i++) {
+
         newGrid = document.createElement('div');
-        newGrid.setAttribute('id','innerGrid');
+        newGrid.setAttribute('id', 'innerGrid');
         newGrid.classList.add('grid');
         newGrid.style.cssText = `width: ${700/userInput}px height: ${700/userInput}px`;
         mainContainer.appendChild(newGrid);
-        
+
     }
- 
+
 }
 
-function changeColor(event){
-    let square = event.target;
-    square.setAttribute('class','color');
-}
+reset.addEventListener('click', reload);
 
-function reload(){
+function reload() {
+
     window.location.reload();
+
 }
-mainContainer.addEventListener('mousemove', changeColor);
-reset.addEventListener('click',reload);
 
+mainContainer.addEventListener('click', startPainting);
+mainContainer.addEventListener('dblclick', stopPainting);
 
+function startPainting(event) {
 
+    mainContainer.addEventListener('mouseover', changeColor);
+}
 
-// for(let i = 0; i < square.length; i++){
+function stopPainting(event) {
 
-//     square[i].addEventListener('mouseover',changeColor); 
-//     if(e.target.value === newGrid || MouseEvent.clientY === 'div' ){
-//         square[i].className = 'color';
-//         }
-// }
+    mainContainer.removeEventListener('mouseover', changeColor);
+    let square = event.target;
+    square.classList.add('stopPainting');
 
+}
 
+function changeColor(event) {
 
-// square.addEventListener('mouseover', changeColor);
+    let square = event.target;
+    square.classList.add('color');
 
-// const square = document.querySelectorAll('.grid');
-// square.addEventListener('mouseover',insertClass)
-
-
-
-// square.addEventListener('mouseover',function(event){
-//     if(event.target.className === 'grid'){
-//         square.className.add('.grid-eventOn');
-//         }
-// });
-
-// const square = document.querySelectorAll('.grid');
-// square.addEventListener('mouseover',insertClass);
-
-// //userInput --> mouse movement. clientX & clientY
-// function insertClass(e){
-//     square.className += 'grid-eventOn';
-// }
+}
