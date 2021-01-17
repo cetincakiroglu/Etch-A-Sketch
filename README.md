@@ -1,6 +1,6 @@
 # Etch-A-Sketch
 
-- The web remake of the fun toy from 90's.
+- Web remake of the fun toy from 90's.
 - UI Designed by Çetin Çakıroğlu.
 - To play, user should enter desired grid amount to the pop-up.
 - To start drawing, click once and hover mouse on grids.
